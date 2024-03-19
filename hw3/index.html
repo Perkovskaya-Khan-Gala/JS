@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*Задание 1
+        Создайте функцию которая возводит переданное число в куб, необходимо вывести в консоль результат 2^3 степени + 3 ^ 3 степени*/
+
+        function numberToDegree(number) {
+            return number ** 3;
+        }
+        console.log(numberToDegree(2) + numberToDegree(3));
+
+        /*Задание 2
+        Пользователь вводит с клавиатуры число, если ввёл текст, необходимо вывести что значение задано неверно
+        Создать фукнцию, которая высчитывает 13% от данного числа и выводит в консоль текст "Размер заработной платы за вычетом налогов равен значение"*/
+
+
+        let data = Number(prompt("Задача 2. Введите число"));
+
+        if (isNaN(data)) console.log("Введено не число, попробуйте еще раз");
+        else salarySize(data);
+
+        function salarySize(salary) {
+            console.log(`Размер заработной платы за вычетом налогов равен ${salary * 0.87}`);
+        }
+        /*Задание 3
+        Пользователь с клавиатуры вводит 3 числа, необходимо создать функцию, которая определяет максимальное значение среди этих чисел*/
+        let parametr1 = Number(prompt("Задача 3. Введите 1 число"));
+        let parametr2 = Number(prompt("Задача 3. Введите 2 число"));
+        let parametr3 = Number(prompt("Задача 3. Введите 3 число"));
+
+        function findMax(param1, param2, param3) {
+            let max = 0
+            if (param1 > param2) max = param1;
+            else max = param2;
+            if (param3 > max) max = param3;
+            return max;
+
+        }
+        console.log(`Максимальное число ${findMax(parametr1, parametr2, parametr3)}`);
+
+        /*Задание 4
+        Необходимо реализовать четыре функции, каждая функция должна принимать по два числа и выполнять одну из операций (каждая функция выполняет одну из них):
+        1. Сложение
+        2. Разность
+        3. Умножение
+        4. Деление
+        Необходимо сделать так, чтобы функция вернула число, например выражение console.log(sum(2, 6)); должно вывести число 8 в консоль (sum - функция сложения в данном примере, ваши названия функций могут отличаться). Округлять значения, которые возвращают функции не нужно, однако, обратите внимание на разность, функция должна вычесть из большего числа меньшее, либо вернуть 0, если числа равны. Функциям всегда передаются корректные числа, проверки на NaN, Infinity делать не нужно.*/
+
+        let number1 = Number(prompt("Задача 4. Введите 1 число"));
+        let number2 = Number(prompt("Задача 4. Введите 2 число"));
+
+        function summ(param1, param2) {
+            console.log(`Сумма двух чисел ${param1 + param2}`);
+        }
+        function diff(param1, param2) {
+            if (param1 >= param2) console.log(`Разность двух чисел ${param1 - param2}`);
+            else console.log(`Разность двух чисел ${param2 - param1}`);
+
+        }
+        function multiply(param1, param2) {
+            console.log(`Произведение двух чисел ${param1 * param2}`);
+
+        }
+        function divide(param1, param2) {
+            if (param1 >= param2) console.log(`Деление двух чисел ${param1 / param2}`);
+            else console.log(`Разность двух чисел ${param2 / param1}`);
+        }
+        summ(number1, number2);
+        diff(number1, number2);
+        multiply(number1, number2);
+        divide(number1, number2);
+
+    </script>
+</body>
+
+</html>

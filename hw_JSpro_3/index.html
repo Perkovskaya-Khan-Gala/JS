@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <h2>Страница добавления отзыва</h2><br>
+        <input type="text" class="title-input" placeholder="Название продукта"><br>
+        <input type="text" class="response-input" placeholder="Отзыв"><br>
+        <button class="addResponse">Добавить</button><br>
+    </div>
+    <div>
+        <h2>Страница просмотра отзывов</h2><br>
+        <div class="response-title"></div><br>
+        <button class="clear">Очистить все</button><br>
+    </div>
+    <script>
+        /*Создайте интерактивную веб-страницу для оставления и просмотра отзывов о продуктах. 
+        Пользователи могут добавлять отзывы о различных продуктах и просматривать добавленные отзывы.
+        
+        Страница добавления отзыва:
+        
+        Поле для ввода названия продукта.
+        Текстовое поле для самого отзыва.
+        Кнопка "Добавить отзыв", которая сохраняет отзыв о продукте в LocalStorage.
+        
+        Страница просмотра отзывов:
+        
+        Показывает список всех продуктов, о которых были оставлены отзывы.
+        При клике на название продукта отображается список всех отзывов по этому продукту.
+        Возможность удаления отзыва (при нажатии на кнопку "Удалить" рядом с отзывом, данный отзыв удаляется из LocalStorage).*/
+
+        const btnAdd = document.querySelector(".addResponse");
+        const inputTitle = document.querySelector('.title-input');
+        const inputResponse = document.querySelector('.response-input');
+        const container1 = document.querySelector('.response-title')
+        const btnClear = document.querySelector('.clear');
+
+
+        document.addEventListener("DOMContentLoaded", () => {//при загрузке страницы
+            const loadResponses = () => {
+                const savedTitles = Object.keys(localStorage);
+                savedTitles.forEach(key => {
+                    const newNode = document.createElement('h2');
+                    newNode.setAttribute('id', key);
+                    newNode.classList.add('response');
+                    newNode.innerHTML = key;
+                    container1.appendChild(newNode);
+                });
+
+            };
+            loadResponses();
+        });
+
+        document.addEventListener('click', function (e) { //при клике на название продукта
+            if (e.target.classList.value == 'response') {
+                const title = e.target.textContent;
+                const responses = localStorage.getItem(title).split(',');
+                const container = document.getElementById(title);
+                responses.forEach(key => {
+                    const newNode = document.createElement('h5');
+                    const newButton = document.createElement('button');
+
+                    newButton.textContent = 'Удалить';
+                    newButton.setAttribute('id', key);
+                    newButton.classList.add('delete');
+
+                    newNode.innerHTML = key;
+                    container.appendChild(newNode);
+                    container.appendChild(newButton);
+
+                });
+                console.log(response);
+
+            }
+
+        });
+
+        btnAdd.addEventListener("click", () => {//при клике на кнопку добавить
+
+            if (localStorage.getItem(inputTitle.value)) {
+                const arrayResponses = localStorage.getItem(inputTitle.value).split(',');
+                arrayResponses.push(inputResponse.value);
+                localStorage.setItem(inputTitle.value, arrayResponses);
+            } else {
+                const arrayResponses = [];
+                arrayResponses.push(inputResponse.value);
+                localStorage.setItem(inputTitle.value, arrayResponses);
+            }
+            location.reload();
+        });
+
+        document.addEventListener('click', function (e) {// при клике на кнопку удалить
+            if (e.target.classList.value == 'delete') {
+                console.log(e.target.id);
+                const title = document.getElementById(e.target.id).parentElement.id;
+                const responses = localStorage.getItem(title).split(',');
+
+                const respIndex = responses.indexOf(e.target.id);
+                console.log(respIndex);
+                responses.splice(respIndex, 1);
+                localStorage.setItem(title, responses);
+                location.reload();
+            }
+        });
+
+
+        btnClear.addEventListener("click", () => {//при клике на кнопку Очистить все
+            localStorage.clear();
+            location.reload();
+        });
+
+    </script>
+
+</body>
+
+</html>

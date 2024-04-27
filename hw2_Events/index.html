@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: grey;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+
+            width: 500px;
+            margin: auto;
+            margin-top: 10%;
+            position: relative;
+
+        }
+
+        .cat {
+            border-radius: 25px;
+        }
+
+        #cat1 {
+            display: block;
+        }
+
+        #cat2 {
+            display: none;
+        }
+
+        #cat3 {
+            display: none;
+        }
+
+        #cat4 {
+            display: none;
+        }
+
+        #cat5 {
+            display: none;
+        }
+
+
+
+        .controllersRight {
+            width: 50px;
+            position: absolute;
+            top: 40%;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .controllersLeft {
+            width: 50px;
+            position: absolute;
+            top: 40%;
+            cursor: pointer;
+        }
+
+        .inputradio {
+            position: absolute;
+            top: 90%;
+            left: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="arrow_8eja62s3pn2b.svg" class="controllersRight" alt="">
+        <img src="arrow_23lhjdynj640.svg" class="controllersLeft" alt="">
+
+        <div class="inputradio">
+            <input class="radio" type="radio" name="1group" id="0">
+            <input class="radio" type="radio" name="1group" id="1">
+            <input class="radio" type="radio" name="1group" id="2">
+            <input class="radio" type="radio" name="1group" id="3">
+            <input class="radio" type="radio" name="1group" id="4">
+        </div>
+        <div class="images_container">
+            <img class="cat" width="500px" height="320px" id="cat1"
+                src="https://proprikol.ru/wp-content/uploads/2020/08/krasivye-kartinki-kotov-45.jpg" alt="">
+            <img class="cat" width="500px" height="320px" id="cat2"
+                src="https://proprikol.ru/wp-content/uploads/2020/08/krasivye-kartinki-kotov-37.jpg" alt="">
+            <img class="cat" width="500px" height="320px" id="cat3"
+                src="https://img.goodfon.com/original/2560x1600/6/c0/kot-vzgliad-progulka.jpg" alt="">
+            <img class="cat" width="500px" height="320px" id="cat4"
+                src="https://besthqwallpapers.com/Uploads/11-4-2018/47992/dark-gray-fluffy-cat-bokeh-domestic-cat-cute-animals-breed-of-fluffy-cats.jpg"
+                alt="">
+            <img class="cat" width="500px" height="320px" id="cat5"
+                src="https://img.goodfon.com/original/2880x1800/e/5b/koshka-vzglyad-lezhit.jpg" alt="">
+        </div>
+
+    </div>
+    <script>
+        /*Вашей задачей является создание веб-слайдера для отображения изображений на веб-странице. Слайдер должен позволять переключаться между изображениями и отображать их в центре экрана.
+        
+        1. Создайте интерфейс веб-страницы, который включает в себя следующие элементы:
+        
+        a. Контейнер для отображения текущего изображения.
+        b. Кнопки "Предыдущее изображение" и "Следующее изображение" для переключения между изображениями.
+        c. Навигационные точки (индикаторы) для быстрого переключения между изображениями.
+        
+        2. Используйте HTML для создания элементов интерфейса.
+        
+        3. Используйте JavaScript для обработки событий:
+        
+        a. При клике на кнопку "Предыдущее изображение" должно отображаться предыдущее изображение.
+        b. При клике на кнопку "Следующее изображение" должно отображаться следующее изображение.
+        c. При клике на навигационные точки, слайдер должен переключаться к соответствующему изображению.
+        
+        4. Слайдер должен циклически переключаться между изображениями, то есть после последнего изображения должно отображаться первое, и наоборот.
+        
+        5. Добавьте стилизацию для слайдера и элементов интерфейса с использованием CSS для улучшения внешнего вида.*/
+        const btnLeft = document.querySelector('#btnLeft');
+        const btnRight = document.querySelector('#btnRight');
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.cat');
+
+        function showImage(index) {
+            images[currentIndex].style.display = 'none';
+            images[index].style.display = 'block';
+            currentIndex = index;
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('controllersLeft')) {
+                let index = currentIndex - 1;
+                if (index < 0) {
+                    index = images.length - 1;
+                }
+
+                showImage(index);
+                document.getElementById(currentIndex).checked = true;
+
+            } else if (e.target.classList.contains('controllersRight')) {
+                let index = currentIndex + 1;
+                if (index >= images.length) {
+                    index = 0;
+                }
+                showImage(index);
+                document.getElementById(currentIndex).checked = true;
+            }
+            else if (e.target.classList.contains('radio')) {
+                const chosen = document.querySelector('input[name="1group"]:checked');
+                let index = Number(chosen.id);
+                showImage(index);
+            }
+
+        });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

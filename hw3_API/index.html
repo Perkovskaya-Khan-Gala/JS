@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #likesContainer {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #myLikesContainer {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #infoContainer {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .center {
+            padding-left: calc(50% - 580px);
+            padding-right: calc(50% - 580px);
+        }
+
+        .likes {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="photoContainer" class="center">
+        <div id="infoContainer">
+            <div id="likesContainer">other user likes</div>
+            <div id="myLikesContainer">my likes</div>
+
+        </div>
+        <div id="descriptionContainer">
+
+        </div>
+    </div>
+    <script>
+        let page = Math.floor(Math.random() * 100);
+        let number = 1;
+        let likesCounter;
+        let user_like;
+        let myLikesCounter;
+        async function fetchPhoto() {
+            try {
+                const response = await fetch(`https://api.unsplash.com/photos?page=${page}&per_page=${number}&client_id=05dgAeIqgFi3F3YCACNXGPuXHA1Gzolq5iO14Ujq5_c`);
+                const photo = await response.json();
+                return photo;
+            } catch (error) {
+                console.log("Ошибка при загрузке фотографий", error);
+                return [];
+            }
+        }
+        async function loadOnePhoto() {
+            const photo = await fetchPhoto();
+            if (photo.length > 0) {
+                console.log(photo);
+                const photoEl = document.createElement('div');
+                photoEl.classList.add('photo');
+
+                const authorEl = document.createElement('h1');
+                authorEl.textContent = photo[0].user.first_name + ' ' + photo[0].user.last_name;
+                infoContainer.prepend(authorEl);
+
+
+
+                const img = document.createElement('img');
+                img.src = photo[0].urls.regular;
+                img.alt = photo[0].alt_description;
+                photoEl.append(img);
+
+                photoContainer.append(photoEl);
+
+                const heartLikes = document.createElement('img');
+                heartLikes.src = 'heart.svg';
+                heartLikes.alt = 'likes';
+                heartLikes.style.width = '30px';
+                heartLikes.classList.add('likes');
+                likesContainer.append(heartLikes);
+
+                const heartLikesEl = document.createElement('div');
+                likesCounter = photo[0].likes;
+                user_like = photo[0].liked_by_user;
+                console.log(likesCounter);
+                heartLikesEl.textContent = likesCounter;
+                heartLikesEl.classList.add('counter');
+                likesContainer.append(heartLikesEl);
+
+                const myHeartLikesEl = document.createElement('div');
+                if (localStorage.getItem('likes')) {
+                    myLikesCounter = localStorage.getItem('likes');
+                } else
+                    myLikesCounter = 0;
+
+                myHeartLikesEl.textContent = myLikesCounter;
+                myHeartLikesEl.classList.add('my_counter');
+                myLikesContainer.append(myHeartLikesEl);
+
+            }
+        }
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('likes') && !user_like) {
+                e.target.src = 'heart_liked.svg';
+                const counter = document.querySelector('.counter');
+                counter.textContent = Number(counter.textContent) + 1;
+                user_like = true;
+                myLikesCounter++;
+                localStorage.setItem('likes', myLikesCounter);
+                const myCounter = document.querySelector('.my_counter');
+                myCounter.textContent = myLikesCounter;
+            }
+        })
+        loadOnePhoto();
+    </script>
+    <script>
+
+    </script>
+</body>
+
+</html>
